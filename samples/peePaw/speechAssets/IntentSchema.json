@@ -1,0 +1,10 @@
+{
+  "intents": [
+    {
+      "intent": "PeePawIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}

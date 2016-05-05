@@ -1,0 +1,8 @@
+PeePawIntent say hello
+PeePawIntent say hello world
+PeePawIntent hello
+PeePawIntent say hi
+PeePawIntent say hi world
+PeePawIntent hi
+PeePawIntent how are you
+PeePawIntent when violet is naked
