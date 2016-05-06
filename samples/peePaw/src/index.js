@@ -64,7 +64,7 @@ PeePaw.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, s
 PeePaw.prototype.intentHandlers = {
     // register custom intent handlers
     "PeePawIntent": function (intent, session, response) {
-        response.tellWithCard("PeePaw says nudi!", "nudi nudi", "nudy, nudie, nudi!");
+        response.tellWithCard("PeePaw says nudi nudi, nudie!", "nudi nudi", "nudy, nudie, nudi!");
     },
     "AMAZON.HelpIntent": function (intent, session, response) {
         response.ask("You can say hello to me!", "You can say hello to me!");
