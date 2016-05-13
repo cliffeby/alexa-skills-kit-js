@@ -1,10 +1,16 @@
 {
   "intents": [
     {
-      "intent": "PeePawIntent"
+      "intent": "MeeMawIntent"
     },
     {
       "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "VioletNudieIntent"
+    },
+    {
+      "intent": "MollyIntent"
     }
   ]
 }
