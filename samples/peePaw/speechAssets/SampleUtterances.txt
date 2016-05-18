@@ -1,11 +1,13 @@
-VioletNudieIntent when violet is in the bath
-VioletNudieIntent when violet is naked
-VioletNudieIntent Violet calls
+VioletNudieIntent what to say when violet is in the bath
+VioletNudieIntent what to say when violet is naked
+VioletNudieIntent what to say when Violet calls
+VioletNudieIntent about Violet
 
-MollyIntent Molly like to say
-MollyIntent Molly's first word
-MollyIntent Molly, what can you say
+MollyIntent what Molly likes to say
+MollyIntent what was Molly's first word
+MollyIntent what Molly can say
+MollyIntent about Molly
 
-MeeMawIntent MeeMaw like to say
-MeeMawIntent MeeMaw
-MeeMawIntent like to say
+MeeMawIntent what MeeMaw likes to say
+MeeMawIntent what MeeMaw says
+MeeMawIntent about MeeMaw

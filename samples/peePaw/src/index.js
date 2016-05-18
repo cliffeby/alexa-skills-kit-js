@@ -64,27 +64,26 @@ PeePaw.prototype.eventHandlers.onSessionEnded = function (sessionEndedRequest, s
 PeePaw.prototype.intentHandlers = {
     // register custom intent handlers
     "VioletNudieIntent": function (intent, session, response) {
-        response.tell("PeePaw says nudi nudi, nudie!");
+        response.tell("When Violet calls, PeePaw says nudi nudi nudie!");
     },
     "MollyIntent": function (intent, session, response) {
         response.tell("Molly can say taco");
     },
     "MeeMawIntent": function (intent, session, response) {
-        response.tell("MeeMaw says I, yi, yi");
+        response.tell("MeeMaw says I, yai, yai");
     },
     "AMAZON.StopIntent": function (intent, session, response) {
-        var speechOutput = "Goodbye";
+        var speechOutput = "OK, Stop it";
         response.tell(speechOutput);
     },
-
     "AMAZON.CancelIntent": function (intent, session, response) {
         var speechOutput = "Goodbye";
         response.tell(speechOutput);
     },
-
     "AMAZON.HelpIntent": function (intent, session, response) {
-        var speechText = "You can ask about PeePaw and MeeMaw's responses to Violet and molly. Such as, When Violet calls... Or What Molly says";
-        var repromptText = "You can just say names like PeePaw, MeeMaw, Violet or Molly... Now, what can I help you with?";
+        var speechText = "You can ask about what PeePaw says when Violet calls, MeeMaw's responses to Violet and molly, or molly's first word. Such as, " +
+            "When Violet calls... Or What Molly can say";
+        var repromptText = "Or you can just say names like PeePaw, MeeMaw, Violet or Molly... Now, what can I help you with?";
         var speechOutput = {
             speech: speechText,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
