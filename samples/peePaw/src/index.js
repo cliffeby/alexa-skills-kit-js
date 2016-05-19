@@ -93,12 +93,46 @@ PeePaw.prototype.intentHandlers = {
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
         response.ask(speechOutput, repromptOutput);
+    },
+    "VioletAgeIntent": function (intent, session, response) {
+        //getAgeinYearsMonthsDays(intent, session, response);
+        var today = new Date();
+
+        var month = months[today.getMonth()];
+        var day = today.getDate();
+        var bDay = new Date(2012,08,03,0,0);
+        var diff = today-bDay;
+        var day = 1000 * 60 * 60 * 24;
+
+        var days = Math.floor(diff/day);
+        var months = Math.floor(days/31);
+        var years = Math.floor(months/12);
+
+        var speechOutput = "Peepaw thinks that Violet is  " + years + ","+ months+"," + days+ ",old";
+        response.tell(speechOutput);
     }
 };
 //     "AMAZON.HelpIntent": function (intent, session, response) {
 //         response.ask("You can say hello to me!", "You can say hello to me!");
 //     }
 // };
+
+ // function getAgeinYearsMonthsDays(intent, session, response){
+ //     var today = new Date();
+ //
+ //     var month = months[today.getMonth()];
+ //     var day = today.getDate();
+ //     var bDay = new Date(2012,08,03,0,0);
+ //     var diff = today-bDay;
+ //     var day = 1000 * 60 * 60 * 24;
+ //
+ //     var days = Math.floor(diff/day);
+ //     var months = Math.floor(days/31);
+ //     var years = Math.floor(months/12);
+ //
+ //     var speechOutput = "Peepaw thinks that Violet is  " + years + ","+ months+"," + days+ ",old";
+ //     response.tell(speechOutput);
+ // };
 
 // Create the handler that responds to the Alexa Request.
 exports.handler = function (event, context) {
