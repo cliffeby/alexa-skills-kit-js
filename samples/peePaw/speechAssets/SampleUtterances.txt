@@ -1,12 +1,22 @@
 VioletNudieIntent what to say when violet is in the bath
 VioletNudieIntent what to say when violet is naked
 VioletNudieIntent what to say when Violet calls
-VioletNudieIntent about Violet
+
+VioletAgeIntent how old is Violet
+VioletAgeIntent what is Violet's age
+VioletAgeIntent about Violet
+VioletAgeIntent about Violet' stats
+VioletAgeIntent about Violet' age
 
 MollyIntent what Molly likes to say
 MollyIntent what was Molly's first word
 MollyIntent what Molly can say
-MollyIntent about Molly
+
+MollyAgeIntent how old is Molly
+MollyAgeIntent what is Molly's age
+MollyAgeIntent about Molly
+MollyAgeIntent about Molly's stats
+MollyAgeIntent about Molly's age
 
 MeeMawIntent what MeeMaw likes to say
 MeeMawIntent what MeeMaw says

@@ -7,10 +7,23 @@
       "intent": "AMAZON.HelpIntent"
     },
     {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
       "intent": "VioletNudieIntent"
     },
     {
+      "intent": "VioletAgeIntent"
+    },
+    {
       "intent": "MollyIntent"
+    },
+    {
+      "intent": "MollyAgeIntent"
     }
   ]
 }
+
