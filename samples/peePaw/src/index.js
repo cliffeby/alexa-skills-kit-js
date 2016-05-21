@@ -64,10 +64,13 @@ PeePaw.prototype.intentHandlers = {
         response.tell("When Violet calls, PeePaw says nudi nudi nudie!");
     },
     "VioletAgeIntent": function (intent, session, response) {
-        getAgeinYearsMonthsDays(intent, session, response);
+        getVioletAgeinYearsMonthsDays(intent, session, response);
     },
     "MollyIntent": function (intent, session, response) {
         response.tell("Molly can say taco");
+    },
+    "MollyAgeIntent": function (intent, session, response) {
+        getMollyAgeinYearsMonthsDays(intent, session, response);
     },
     "MeeMawIntent": function (intent, session, response) {
         response.tell("MeeMaw says I, yai, yai little one");
@@ -95,14 +98,31 @@ PeePaw.prototype.intentHandlers = {
         response.ask(speechOutput, repromptOutput);
     }
 };
-function getAgeinYearsMonthsDays(intent, session, response) {
+function getVioletAgeinYearsMonthsDays(intent, session, response) {
     var bDay = new Date('2012-08-03');
     var difdt = new Date(new Date() - bDay);
     console.log((difdt.toISOString().slice(0, 4) - 1970) + "Y " + (difdt.getMonth()+1) + "M " + difdt.getDate() + "D");
     var years = difdt.toISOString().slice(0,4)-1970;
     var months = difdt.getMonth()+1;
     var days = difdt.getDate();
+    if (years==0) years = "no";
+    if (months==0) months = "no";
+    if (days==0) days = "no";
     var speechOutput = "Peepaw thinks that Violet is  " + years + " years," + months + " months, and" + days + " days old";
+    console.log(speechOutput);
+    response.tell(speechOutput);
+};
+function getMollyAgeinYearsMonthsDays(intent, session, response) {
+    var bDay = new Date('2015-07-23');
+    var difdt = new Date(new Date() - bDay);
+    console.log((difdt.toISOString().slice(0, 4) - 1970) + "Y " + (difdt.getMonth()+1) + "M " + difdt.getDate() + "D");
+    var years = difdt.toISOString().slice(0,4)-1970;
+    var months = difdt.getMonth()+1;
+    var days = difdt.getDate();
+    if (years==0) years = "no";
+    if (months==0) months = "no";
+    if (days==0) days = "no";
+    var speechOutput = "Peepaw thinks that Molly is  " + years + " years," + months + " months, and" + days + " days old";
     console.log(speechOutput);
     response.tell(speechOutput);
 };
