@@ -9,16 +9,10 @@
  * This simple sample has no external dependencies or session management, and shows the most basic
  * example of how to create a Lambda function for handling Alexa Skill requests.
  *
- * Examples:
- * One-shot model:
- *  User: "Alexa, tell Greeter to say hello"
- *  Alexa: "Hello World!"
- */
-
 /**
  * App ID for the skill
  */
-var APP_ID = undefined; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
+var APP_ID = "amzn1.echo-sdk-ams.app.5eb5f870-713e-4e34-b923-5e4fb0592a55"; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
 
 /**
  * The AlexaSkill prototype and helper functions
@@ -47,8 +41,8 @@ PeePaw.prototype.eventHandlers.onSessionStarted = function (sessionStartedReques
 
 PeePaw.prototype.eventHandlers.onLaunch = function (launchRequest, session, response) {
     console.log("PeePaw onLaunch requestId: " + launchRequest.requestId + ", sessionId: " + session.sessionId);
-    var speechOutput = "Welcome you can say PeePaw says";
-    var repromptText = "You can say PeePaw says";
+    var speechOutput = "Welcome, you can say PeePaw";
+    var repromptText = "You can say PeePaw help";
     response.ask(speechOutput, repromptText);
 };
 
@@ -72,6 +66,9 @@ PeePaw.prototype.intentHandlers = {
     "MollyAgeIntent": function (intent, session, response) {
         getAgeinYearsMonthsDays(intent, session, response,"Molly","2015-07-23");
     },
+    "MommyAgeIntent": function (intent, session, response) {
+        getAgeinYearsMonthsDays(intent, session, response,"Mommy","1980-05-13");
+    },
     "MeeMawIntent": function (intent, session, response) {
         response.tell("MeeMaw says I, yai, yai little one");
     },
@@ -86,7 +83,7 @@ PeePaw.prototype.intentHandlers = {
     "AMAZON.HelpIntent": function (intent, session, response) {
         var speechText = "You can ask about what PeePaw says when Violet calls, MeeMaw's responses to Violet and molly, or molly's first word. Such as, " +
             "When Violet calls... Or What Molly can say";
-        var repromptText = "Or you can just say names like PeePaw, MeeMaw, Violet or Molly... Now, what can I help you with?";
+        var repromptText = "Or you can just say names like Mommy, MeeMaw, Violet or Molly... Now, what can I help you with?";
         var speechOutput = {
             speech: speechText,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
@@ -100,11 +97,12 @@ PeePaw.prototype.intentHandlers = {
 };
 function getAgeinYearsMonthsDays(intent, session, response, name,bDay) {
     var monthName = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-    var bDay = new Date(bDay);
-    var name = name;
+    bDay = new Date(bDay);
+    //var name = name;
     var namePossesive = name +"'s";
     var difdt = new Date(new Date() - bDay);
-    console.log((difdt.toISOString().slice(0, 4) - 1970) + "Y " + (difdt.getMonth()+1) + "M " + difdt.getDate() + "D");
+    //console.log((difdt.toISOString().slice(0, 4) - 1970) + "Y " +
+    //    (difdt.getMonth()+1) + "M " + difdt.getDate() + "D");
     var years = difdt.toISOString().slice(0,4)-1970;
     var months = difdt.getMonth()+1;
     var days = difdt.getDate();
@@ -115,9 +113,9 @@ function getAgeinYearsMonthsDays(intent, session, response, name,bDay) {
         " " + bDay.getDate()+ "  " + bDay.getFullYear() +
         " . Peepaw thinks that " + name + "  is  " + years + " years," + months +
         " months, and" + days + " days old";
-    console.log(speechOutput);
+    //console.log(speechOutput);
     response.tell(speechOutput);
-};
+}
 
 
 // Create the handler that responds to the Alexa Request.
