@@ -62,6 +62,10 @@ PeePaw.prototype.intentHandlers = {
     },
     "MollyIntent": function (intent, session, response) {
         response.tell("Molly can say taco");
+    }
+    ,
+    "FrozenIntent": function (intent, session, response) {
+        response.tell("PeePaw likes Anna and Elsie best.  Christov, Hans and Oldloff are OK");
     },
     "MollyAgeIntent": function (intent, session, response) {
         getAgeinYearsMonthsDays(intent, session, response,"Molly","2015-07-23");

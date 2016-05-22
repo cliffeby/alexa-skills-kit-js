@@ -20,7 +20,10 @@
     },
     {
       "intent": "MollyIntent"
-    },
+    },,
+    {
+      "intent": "FrozenIntent"
+    }
     {
       "intent": "MollyAgeIntent"
     }

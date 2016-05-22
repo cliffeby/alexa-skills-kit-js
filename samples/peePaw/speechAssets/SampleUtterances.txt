@@ -21,3 +21,7 @@ MollyAgeIntent about Molly's age
 MeeMawIntent what MeeMaw likes to say
 MeeMawIntent what MeeMaw says
 MeeMawIntent about MeeMaw
+
+FrozenIntent about Frozen
+FrozenIntent Frozen
+FrozenIntent Frozen characters
