@@ -12,7 +12,7 @@
 /**
  * App ID for the skill
  */
-var APP_ID = "amzn1.echo-sdk-ams.app.5eb5f870-713e-4e34-b923-5e4fb0592a55"; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
+var APP_ID = undefined; //replace with "amzn1.echo-sdk-ams.app.[your-unique-value-here]";
 
 /**
  * The AlexaSkill prototype and helper functions
@@ -58,12 +58,11 @@ PeePaw.prototype.intentHandlers = {
         response.tell("When Violet calls, PeePaw says nudi nudi nudie!");
     },
     "VioletAgeIntent": function (intent, session, response) {
-        getAgeinYearsMonthsDays(intent, session, response,"Violet","2012-08-23");
+        getAgeinYearsMonthsDays(intent, session, response,"Violet","2012-08-02");
     },
     "MollyIntent": function (intent, session, response) {
         response.tell("Molly can say taco");
-    }
-    ,
+    },
     "FrozenIntent": function (intent, session, response) {
         response.tell("PeePaw likes Anna and Elsie best.  Christov, Hans and Oldloff are OK");
     },
@@ -81,7 +80,7 @@ PeePaw.prototype.intentHandlers = {
         response.tell(speechOutput);
     },
     "AMAZON.CancelIntent": function (intent, session, response) {
-        var speechOutput = "Goodbye";
+        var speechOutput = "Goodbye Little One";
         response.tell(speechOutput);
     },
     "AMAZON.HelpIntent": function (intent, session, response) {
