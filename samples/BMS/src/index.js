@@ -17,7 +17,8 @@
 'use strict';
 
 var AlexaSkill = require('./AlexaSkill'),
-    areaCodes = require('./data');
+    areaCodes = require('./data'),
+    costCenters = require('./myCC');
 
 var APP_ID = 'amzn1.echo-sdk-ams.app.7838e90e-4fbd-4048-93e3-c6b8ec4fce43'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
@@ -65,12 +66,12 @@ AreaCodeHelper.prototype.intentHandlers = {
             repromptOutput;
 
         //Lookup description for a valid area code
-        if (itemName in areaCodes) {
-            location = areaCodes[itemName].Description;
+        if (itemName in costCenters) {
+            location = costCenters[itemName].CostCenter;
         }
 
         if (location) {
-            var speechText = "<speak>The location for " + "<say-as interpret-as='digits'>" + itemName + "</say-as> is " + location + "</speak>";
+            var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + itemName + "</say-as> is " + location + "</speak>";
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
@@ -80,20 +81,20 @@ AreaCodeHelper.prototype.intentHandlers = {
             var speech;
             if (itemName) {
                 if (itemName === "?") {
-                    speech = "<speak>I'm sorry, I did not understand you. Please say ... 'what is' ... plus a four digit area code.</speak>";
+                    speech = "<speak>I'm sorry, I did not understand you. Please say ... 'what is' ... plus a four digit cost center.</speak>";
                 } else {
                     speech = "<speak>I'm sorry.  I could not find cost code " + "<say-as interpret-as='digits'>" + itemName + "</say-as>"
                         + ". Please say ... 'what is' ... plus a four digit area code.</speak>";
                 }
             } else {
-                speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... plus a four digit area code.</speak>";
+                speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... plus a four digit cost center.</speak>";
             }
             speechOutput = {
                 speech: speech,
                 type: AlexaSkill.speechOutputType.SSML
             };
             repromptOutput = {
-                speech: "Please say ... 'what is' ... plus a four digit area code, or say cancel,  to quit.",
+                speech: "Please say ... 'what is' ... plus a four digit cost center, or say cancel,  to quit.",
                 type: AlexaSkill.speechOutputType.PLAIN_TEXT
             };
             response.ask(speechOutput, repromptOutput);
