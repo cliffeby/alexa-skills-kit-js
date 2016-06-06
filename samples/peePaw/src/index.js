@@ -75,6 +75,9 @@ PeePaw.prototype.intentHandlers = {
     "MeeMawIntent": function (intent, session, response) {
         response.tell("MeeMaw says I, yai, yai little one");
     },
+    "MeeMawNameIntent": function (intent, session, response) {
+        response.tell("MeeMaw's name is Eugenia Iselman Eaby.  She likes to say, I'm, Eugenia");
+    },
     "AMAZON.StopIntent": function (intent, session, response) {
         var speechOutput = "OK, Stop it";
         response.tell(speechOutput);
