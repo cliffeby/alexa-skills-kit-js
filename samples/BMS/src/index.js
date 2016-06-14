@@ -19,7 +19,7 @@
 var AlexaSkill = require('./AlexaSkill'),
     areaCodes = require('./data'),
     costCenters = require('./myCC'),
-    costCenterNames = require('./myCC');
+    costCenterNames = require('./myCCnames');
 
 var APP_ID = 'amzn1.echo-sdk-ams.app.7838e90e-4fbd-4048-93e3-c6b8ec4fce43'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
@@ -101,25 +101,28 @@ AreaCodeHelper.prototype.intentHandlers = {
             response.ask(speechOutput, repromptOutput);
         }
     },
-    "BMSIntent": function (intent, session, response) {
-        var itemSlot = intent.slots.Name,
-            itemName;
+    "CostCenterNameIntent": function (intent, session, response) {
+        var itemSlot = intent.slots.CityName,
+            itemNumber;
         if (itemSlot && itemSlot.value){
-            itemName = itemSlot.value.toLowerCase();
+           // itemNumber = itemSlot.value.toLowerCase();
+            itemNumber = itemSlot.value;
+            console.log('itemNumber',itemNumber);
         }
 
-        var cardTitle = "Cost Center for " + itemName,
+        var cardTitle = "Cost Center for " + itemNumber,
             location,
             speechOutput,
             repromptOutput;
 
         //Lookup description for a valid area code
-        if (itemName in costCenterNames) {
-            location = costCenterNames[itemName].CostCenter;
+        if (itemNumber in costCenterNames) {
+            location = costCenterNames[itemNumber].Code;
+            console.log('location',location);
         }
 
         if (location) {
-            var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + itemName + "</say-as> is " + location + "</speak>";
+            var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + itemNumber + "</say-as> is " + location + "</speak>";
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
@@ -127,22 +130,22 @@ AreaCodeHelper.prototype.intentHandlers = {
             response.tellWithCard(speechOutput, cardTitle, location);
         } else {
             var speech;
-            if (itemName) {
-                if (itemName === "?") {
-                    speech = "<speak>I'm sorry, I did not understand you. Please say ... 'what is' ... plus a four digit cost center.</speak>";
+            if (itemNumber) {
+                if (itemNumber === "?") {
+                    speech = "<speak>I'm sorry, I did not understand you Cost Center intent. Please say ... 'what is' ... plus a cost center name.</speak>";
                 } else {
-                    speech = "<speak>I'm sorry.  I could not find cost code " + "<say-as interpret-as='digits'>" + itemName + "</say-as>"
-                        + ". Please say ... 'what is' ... plus a four digit area code.</speak>";
+                    speech = "<speak>I'm sorry.  I could not find cost center " + itemNumber
+                        + ". Please say ... 'what is' ... plus a cost cnter name.</speak>";
                 }
             } else {
-                speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... plus a four digit cost center.</speak>";
+                speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... and a cost center name.</speak>";
             }
             speechOutput = {
                 speech: speech,
                 type: AlexaSkill.speechOutputType.SSML
             };
             repromptOutput = {
-                speech: "Please say ... 'what is' ... plus a four digit cost center, or say cancel,  to quit.",
+                speech: "Please say ... 'what is' ... plus a cost center, or say cancel,  to quit.",
                 type: AlexaSkill.speechOutputType.PLAIN_TEXT
             };
             response.ask(speechOutput, repromptOutput);

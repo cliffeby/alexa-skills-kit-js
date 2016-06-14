@@ -12,3 +12,13 @@ RecipeIntent give me the location of {Item}
 RecipeIntent location of {Item}
 RecipeIntent location of area code {Item}
 RecipeIntent {Item}
+
+CostCenterNameIntent what is {cityName}
+CostCenterNameIntent {cityName}
+
+
+AreaCodeIntent what is office {Item}
+AreaCodeIntent what is department {Item}
+AreaCodeIntent what the location of cost center {Item}
+AreaCodeIntent what the location of cost code {Item} is
+AreaCodeIntent {Item}
