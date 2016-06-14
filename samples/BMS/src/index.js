@@ -112,23 +112,41 @@ AreaCodeHelper.prototype.intentHandlers = {
 
         var cardTitle = "Cost Center for " + itemNumber,
             location,
+            cityName,
             speechOutput,
             repromptOutput;
-
+console.log('ccName', costCenterNames);
         //Lookup description for a valid area code
         if (itemNumber in costCenterNames) {
-            location = costCenterNames[itemNumber].Code;
+            for (var i = 0; i < itemNumber.length; i++) {
+                location[i]= costCenterNames.itemNumber[i].Code;
+                cityName[i]= costCenterNames.itemNumber[i].CostCenter;
+            }
+            //location = costCenterNames[itemNumber].Code;
+            //cityName = costCenterNames[itemNumber].CostCenter;
             console.log('location',location);
         }
 
-        if (location) {
-            var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + itemNumber + "</say-as> is " + location + "</speak>";
+        if (location.length==1) {
+            var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + cityName[0] + "</say-as> is " + location[0] + "</speak>";
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
             response.tellWithCard(speechOutput, cardTitle, location);
-        } else {
+        } else if(location.length>1) {
+            var multipleCCs;
+            for (var i = 0; i<itemNumber.length; i++) {
+                multipleCCs = multipleCCs +"The cost center for" + cityName[i]+ "<say-as interprest-as= digits" +location[i] + "</speak>";
+            }
+            var speechText = "<speak>I found" + location.length + "cost centers for " + itemNumber + "They are" + multipleCCs;
+            speechOutput = {
+                speech: speechText,
+                type: AlexaSkill.speechOutputType.SSML
+            };
+            response.tellWithCard(speechOutput, cardTitle, location);
+        }
+        else {
             var speech;
             if (itemNumber) {
                 if (itemNumber === "?") {
