@@ -111,11 +111,11 @@ AreaCodeHelper.prototype.intentHandlers = {
         }
 
         var cardTitle = "Cost Center for " + itemNumber,
-            location = '9999',
+            location = [],
             cityName = [],
             speechOutput,
             repromptOutput;
-console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', itemNumber.length);
+console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', costCenterNames[itemNumber].length);
         //Lookup description for a valid area code
         if (itemNumber in costCenterNames) {
             for (var i = 0; i < costCenterNames[itemNumber].length; i++) {
@@ -125,7 +125,7 @@ console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber
             //location = costCenterNames[itemNumber].Code;
             //cityName = costCenterNames[itemNumber].CostCenter;
             console.log('location',location);
-        }
+       // }
 
         if (location.length==1) {
             var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + cityName[0] + "</say-as> is " + location[0] + "</speak>";
@@ -145,7 +145,7 @@ console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber
                 type: AlexaSkill.speechOutputType.SSML
             };
             response.tellWithCard(speechOutput, cardTitle, location);
-        }
+        }}
         else {
             var speech;
             if (itemNumber) {
