@@ -111,16 +111,16 @@ AreaCodeHelper.prototype.intentHandlers = {
         }
 
         var cardTitle = "Cost Center for " + itemNumber,
-            location,
-            cityName,
+            location = '9999',
+            cityName = [],
             speechOutput,
             repromptOutput;
-console.log('ccName', costCenterNames);
+console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', itemNumber.length);
         //Lookup description for a valid area code
         if (itemNumber in costCenterNames) {
-            for (var i = 0; i < itemNumber.length; i++) {
-                location[i]= costCenterNames.itemNumber[i].Code;
-                cityName[i]= costCenterNames.itemNumber[i].CostCenter;
+            for (var i = 0; i < costCenterNames[itemNumber].length; i++) {
+                location[i]= costCenterNames[itemNumber][i].Code;
+                cityName[i]= costCenterNames[itemNumber][i].CostCenter;
             }
             //location = costCenterNames[itemNumber].Code;
             //cityName = costCenterNames[itemNumber].CostCenter;
@@ -136,7 +136,7 @@ console.log('ccName', costCenterNames);
             response.tellWithCard(speechOutput, cardTitle, location);
         } else if(location.length>1) {
             var multipleCCs;
-            for (var i = 0; i<itemNumber.length; i++) {
+            for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
                 multipleCCs = multipleCCs +"The cost center for" + cityName[i]+ "<say-as interprest-as= digits" +location[i] + "</speak>";
             }
             var speechText = "<speak>I found" + location.length + "cost centers for " + itemNumber + "They are" + multipleCCs;
