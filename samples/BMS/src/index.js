@@ -115,36 +115,42 @@ AreaCodeHelper.prototype.intentHandlers = {
             cityName = [],
             speechOutput,
             repromptOutput;
-console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', costCenterNames[itemNumber].length);
+
         //Lookup description for a valid area code
         if (itemNumber in costCenterNames) {
             for (var i = 0; i < costCenterNames[itemNumber].length; i++) {
                 location[i]= costCenterNames[itemNumber][i].Code;
                 cityName[i]= costCenterNames[itemNumber][i].CostCenter;
             }
-            //location = costCenterNames[itemNumber].Code;
-            //cityName = costCenterNames[itemNumber].CostCenter;
+
             console.log('location',location);
+            console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', costCenterNames[itemNumber].length);
        // }
 
         if (location.length==1) {
-            var speechText = "<speak>The cost center for " + "<say-as interpret-as='digits'>" + cityName[0] + "</say-as> is " + location[0] + "</speak>";
+            console.log('location', location, cityName[0], location[0]);
+            var speechText = "<speak>The cost center for " + cityName[0] +  "is <say-as interpret-as='digits'>" + location[0] + "</say-as></speak>";
+
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-            response.tellWithCard(speechOutput, cardTitle, location);
+            response.tellWithCard(speechOutput, cardTitle)
+
         } else if(location.length>1) {
-            var multipleCCs;
+            console.log('locationMult', location, cityName[0], location[0]);
+            var multipleCCs ="";
             for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
-                multipleCCs = multipleCCs +"The cost center for" + cityName[i]+ "<say-as interprest-as= digits" +location[i] + "</speak>";
+                multipleCCs = multipleCCs +" The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as>" ;
             }
-            var speechText = "<speak>I found" + location.length + "cost centers for " + itemNumber + "They are" + multipleCCs;
+            multipleCCs = multipleCCs +  "</speak>";
+            var speechText = "<speak>I found " + location.length + " cost centers for " + itemNumber + " They are" + multipleCCs;
+            console.log(speechText);
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-            response.tellWithCard(speechOutput, cardTitle, location);
+            response.tellWithCard(speechOutput, cardTitle);
         }}
         else {
             var speech;
