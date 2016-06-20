@@ -82,10 +82,12 @@ AreaCodeHelper.prototype.intentHandlers = {
             var speech;
             if (itemName) {
                 if (itemName === "?") {
+                    // If {Item} does not evaluate to a number, itemName return ?
                     speech = "<speak>I'm sorry, I did not understand you. Please say ... 'what is' ... plus a four digit cost center.</speak>";
                 } else {
+                    // It {Item} is a number, but is not found, itemName  is -1
                     speech = "<speak>I'm sorry.  I could not find cost code " + "<say-as interpret-as='digits'>" + itemName + "</say-as>"
-                        + ". Please say ... 'what is' ... plus a four digit area code.</speak>";
+                        + ". Please say ... 'what is' ... plus a four digit cost center code.</speak>";
                 }
             } else {
                 speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... plus a four digit cost center.</speak>";
@@ -135,22 +137,26 @@ AreaCodeHelper.prototype.intentHandlers = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-            response.tellWithCard(speechOutput, cardTitle)
+            response.tellWithCard(speechOutput, cardTitle, location[0])
 
         } else if(location.length>1) {
             console.log('locationMult', location, cityName[0], location[0]);
             var multipleCCs ="";
+            var multipleCardEntries = "";
             for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
                 multipleCCs = multipleCCs +"<p> The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as></p>" ;
+                multipleCardEntries = multipleCardEntries + cityName[i]+ "is  " +location[i]+ "\n" ;
             }
             multipleCCs = multipleCCs +  "</speak>";
+            cardTitle = "There are "+ location.length + " cost centers for "+ itemNumber +".  They are: " + multipleCardEntries;
             var speechText = "<speak><p>I found " + location.length + " cost centers for " + itemNumber + "</p><p> They are</p>" + multipleCCs;
             console.log(speechText);
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-            response.tellWithCard(speechOutput, cardTitle);
+
+            response.tellWithCard(speechOutput, cardTitle, location [0]);
         }}
         else {
             var speech;
