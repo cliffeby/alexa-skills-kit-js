@@ -106,11 +106,11 @@ AreaCodeHelper.prototype.intentHandlers = {
             itemNumber;
         if (itemSlot && itemSlot.value){
            // itemNumber = itemSlot.value.toLowerCase();
-            itemNumber = itemSlot.value;
+            itemNumber = itemSlot.value.toUpperCase();
             console.log('itemNumber',itemNumber);
         }
 
-        var cardTitle = "Cost Center for " + itemNumber,
+        var cardTitle = "Cost Center for " + itemNumber.toUpperCase(),
             location = [],
             cityName = [],
             speechOutput,
@@ -120,7 +120,7 @@ AreaCodeHelper.prototype.intentHandlers = {
         if (itemNumber in costCenterNames) {
             for (var i = 0; i < costCenterNames[itemNumber].length; i++) {
                 location[i]= costCenterNames[itemNumber][i].Code;
-                cityName[i]= costCenterNames[itemNumber][i].CostCenter;
+                cityName[i]= costCenterNames[itemNumber][i].CostCenter.toUpperCase();
             }
 
             console.log('location',location);
@@ -129,7 +129,7 @@ AreaCodeHelper.prototype.intentHandlers = {
 
         if (location.length==1) {
             console.log('location', location, cityName[0], location[0]);
-            var speechText = "<speak>The cost center for " + cityName[0] +  "is <say-as interpret-as='digits'>" + location[0] + "</say-as></speak>";
+            var speechText = "<speak>The cost center for " + cityName[0] +  " is <say-as interpret-as='digits'>" + location[0] + "</say-as></speak>";
 
             speechOutput = {
                 speech: speechText,
@@ -141,10 +141,10 @@ AreaCodeHelper.prototype.intentHandlers = {
             console.log('locationMult', location, cityName[0], location[0]);
             var multipleCCs ="";
             for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
-                multipleCCs = multipleCCs +" The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as>" ;
+                multipleCCs = multipleCCs +"<p> The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as></p>" ;
             }
             multipleCCs = multipleCCs +  "</speak>";
-            var speechText = "<speak>I found " + location.length + " cost centers for " + itemNumber + " They are" + multipleCCs;
+            var speechText = "<speak><p>I found " + location.length + " cost centers for " + itemNumber + "</p><p> They are</p>" + multipleCCs;
             console.log(speechText);
             speechOutput = {
                 speech: speechText,
