@@ -22,7 +22,7 @@ var AlexaSkill = require('./AlexaSkill'),
     costCenterNames = require('./myCCnames');
 
 var APP_ID = 'amzn1.echo-sdk-ams.app.7838e90e-4fbd-4048-93e3-c6b8ec4fce43'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
-
+var picURL = "http://www.wsp-pb.com/Globaln/USA/Leadership/leadership3/Anita%20Macaluso.jpg";
 /**
  * BMS CostCenter is a child of AlexaSkill AreaCodeHelper.
  * To read more about inheritance in JavaScript, see the link below.
@@ -41,6 +41,7 @@ AreaCodeHelper.prototype.eventHandlers.onLaunch = function (launchRequest, sessi
     var speechText = {
             speech:  "<speak>Welcome to cost center lookup with Anita Macaluso. You can ask a question like, "
             +"what is <say-as interpret-as='digits'>9800</say-as> ? ... "
+                +"Or, what is Aviation"
             +"Now, what cost center would you like?</speak>",
             type:   AlexaSkill.speechOutputType.SSML
         },
@@ -137,8 +138,9 @@ AreaCodeHelper.prototype.intentHandlers = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-            response.tellWithCard(speechOutput, cardTitle, location[0])
-
+            console.log(speechOutput, cardTitle, location[0], picURL);
+            response.tellWithCardPic(speechOutput, cardTitle, location[0], picURL);
+            console.log("response", response);
         } else if(location.length>1) {
             console.log('locationMult', location, cityName[0], location[0]);
             var multipleCCs ="";
@@ -162,13 +164,13 @@ AreaCodeHelper.prototype.intentHandlers = {
             var speech;
             if (itemNumber) {
                 if (itemNumber === "?") {
-                    speech = "<speak>I'm sorry, I did not understand you Cost Center intent. Please say ... 'what is' ... plus a cost center name.</speak>";
+                    speech = "<speak>I'm sorry, I did not understand you Cost Center intent. Please say ... 'what is' ... plus a cost center name or number.</speak>";
                 } else {
                     speech = "<speak>I'm sorry.  I could not find cost center " + itemNumber
-                        + ". Please say ... 'what is' ... plus a cost cnter name.</speak>";
+                        + ". Please say ... 'what is' ... plus a cost center name or number.</speak>";
                 }
             } else {
-                speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... and a cost center name.</speak>";
+                speech = "<speak>I'm sorry, I could not find that cost center.  Please say ... 'what is' ... and a cost center name or number.</speak>";
             }
             speechOutput = {
                 speech: speech,
@@ -193,9 +195,10 @@ AreaCodeHelper.prototype.intentHandlers = {
 
     "AMAZON.HelpIntent": function (intent, session, response) {
         var speechText = {
-                speech:  "<speak>You get the location of an area code by saying, "
+                speech:  "<speak>You get the location of a cost center by saying, "
                 +"where is <say-as interpret-as='digits'>8600</say-as> ? ... "
-                +"Now, what area code would you like?</speak>",
+                    +"Or you can get the cost center code by asking what is Boston"
+                +"Now, what would you like?</speak>",
                 type:   AlexaSkill.speechOutputType.SSML
             },
         // If the user either does not reply to the welcome message or says something that is not

@@ -146,6 +146,14 @@ Response.prototype = (function () {
                 content: options.cardContent
             };
         }
+        if (options.cardTitle && options.cardContent && options.picURL) {
+            alexaResponse.card = {
+                type: "Standard",
+                title: options.cardTitle,
+                content: options.cardContent,
+                image: options.picURL
+            };
+        }
         var returnResult = {
                 version: '1.0',
                 response: alexaResponse
@@ -170,6 +178,16 @@ Response.prototype = (function () {
                 output: speechOutput,
                 cardTitle: cardTitle,
                 cardContent: cardContent,
+                shouldEndSession: true
+            }));
+        },
+        tellWithCardPic: function (speechOutput, cardTitle, cardContent, picURL) {
+            this._context.succeed(buildSpeechletResponse({
+                session: this._session,
+                output: speechOutput,
+                cardTitle: cardTitle,
+                cardContent: cardContent,
+                picURL: {smallImageUrl: picURL},
                 shouldEndSession: true
             }));
         },
