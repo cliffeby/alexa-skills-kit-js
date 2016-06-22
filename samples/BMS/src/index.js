@@ -59,7 +59,7 @@ AreaCodeHelper.prototype.eventHandlers.onLaunch = function (launchRequest, sessi
         };
     response.ask(speechText, repromptText);
 };
-
+//Lookup cost center name by number
 AreaCodeHelper.prototype.intentHandlers = {
     "AreaCodeIntent": function (intent, session, response) {
         var itemSlot = intent.slots.Item,
@@ -110,7 +110,7 @@ AreaCodeHelper.prototype.intentHandlers = {
             response.ask(speechOutput, repromptOutput);
         }
     },
-    
+ //Lookup cost center number by name
     "CostCenterNameIntent": function (intent, session, response) {
         var itemSlot = intent.slots.CityName,
             itemNumber;
@@ -126,7 +126,7 @@ AreaCodeHelper.prototype.intentHandlers = {
             speechOutput,
             repromptOutput;
 
-        //Lookup description for a valid area code
+        //Find cost center name in list of all cost center names
         if (itemNumber in costCenterNames) {
             for (var i = 0; i < costCenterNames[itemNumber].length; i++) {
                 location[i]= costCenterNames[itemNumber][i].Code;
@@ -146,7 +146,8 @@ AreaCodeHelper.prototype.intentHandlers = {
             };
             //console.log(speechOutput, cardTitle, location[0], picURL);
             response.tellWithCardPic(speechOutput, cardTitle, location[0], picURL);
-            console.log("response", response);
+            //console.log("response", response);
+        // If more than one cost code for the location name
         } else if(location.length>1) {
             //console.log('locationMult', location, cityName[0], location[0]);
             var multipleCCs ="";
@@ -167,10 +168,12 @@ AreaCodeHelper.prototype.intentHandlers = {
         }}
         else {
             var speech;
+            // If {CityName} does not evaluate to text, itemNumber return ?  NEED TO CONFIRM
             if (itemNumber) {
                 if (itemNumber === "?") {
                     speech = "<speak>I'm sorry, I did not understand you Cost Center intent. Please say ... 'what is' ... plus a cost center name or number.</speak>";
                 } else {
+                    // It {CityName} is not found, itemNumber  is -1
                     speech = "<speak>I'm sorry.  I could not find cost center " + itemNumber
                         + ". Please say ... 'what is' ... plus a cost center name or number.</speak>";
                 }
