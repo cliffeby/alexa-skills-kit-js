@@ -7,24 +7,30 @@
 
 /**
  * This sample shows how to create a Lambda function for handling Alexa Skill requests that:
- *
+ * Looks up items by name or number
  * Examples:
- * One-shot model:
- *  User: "Alexa, ask my BMS about 9 7 0 7"
- *  Alexa: "(reads back the description)"
+ *  *  User: "Alexa, ask my BMS about 9 7 0 7"
+ *  Alexa: " finds and reads the name of the cost center"
+ *
+ *  * User: "Alexa, ask my BMS about cost center New York"
+ *  Alexa:  "I found 2 cost centers for NEw York.  They are..."
+ *
+ *  Cards are displayed showing an image and the detail requested.
  */
 
 'use strict';
 
 var AlexaSkill = require('./AlexaSkill'),
-    areaCodes = require('./data'),
     costCenters = require('./myCC'),
     costCenterNames = require('./myCCnames');
 
 var APP_ID = 'amzn1.echo-sdk-ams.app.7838e90e-4fbd-4048-93e3-c6b8ec4fce43'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
-var picURL = "http://www.wsp-pb.com/Globaln/USA/Leadership/leadership3/Anita%20Macaluso.jpg";
+
+// Sample images that could be used
+var picURL = "https://s3.amazonaws.com/alexaimagescce/Anita+Macaluso.jpg";
+var picURLcce = "https://s3.amazonaws.com/alexaimagescce/CliffEby2_jpg.jpg";
 /**
- * BMS CostCenter is a child of AlexaSkill AreaCodeHelper.
+ * BMS CostCenter is a child of AlexaSkill.
  * To read more about inheritance in JavaScript, see the link below.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#Inheritance
@@ -104,6 +110,7 @@ AreaCodeHelper.prototype.intentHandlers = {
             response.ask(speechOutput, repromptOutput);
         }
     },
+    
     "CostCenterNameIntent": function (intent, session, response) {
         var itemSlot = intent.slots.CityName,
             itemNumber;
@@ -125,40 +132,38 @@ AreaCodeHelper.prototype.intentHandlers = {
                 location[i]= costCenterNames[itemNumber][i].Code;
                 cityName[i]= costCenterNames[itemNumber][i].CostCenter.toUpperCase();
             }
-
-            console.log('location',location);
-            console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', costCenterNames[itemNumber].length);
+            //console.log('location',location);
+            //console.log('ccName', costCenterNames,'ccitemNumber', costCenterNames[itemNumber][0].Code,'Length', costCenterNames[itemNumber].length);
        // }
 
         if (location.length==1) {
-            console.log('location', location, cityName[0], location[0]);
+            //console.log('location', location, cityName[0], location[0]);
             var speechText = "<speak>The cost center for " + cityName[0] +  " is <say-as interpret-as='digits'>" + location[0] + "</say-as></speak>";
 
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-            console.log(speechOutput, cardTitle, location[0], picURL);
+            //console.log(speechOutput, cardTitle, location[0], picURL);
             response.tellWithCardPic(speechOutput, cardTitle, location[0], picURL);
             console.log("response", response);
         } else if(location.length>1) {
-            console.log('locationMult', location, cityName[0], location[0]);
+            //console.log('locationMult', location, cityName[0], location[0]);
             var multipleCCs ="";
             var multipleCardEntries = "";
             for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
                 multipleCCs = multipleCCs +"<p> The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as></p>" ;
-                multipleCardEntries = multipleCardEntries + cityName[i]+ "is  " +location[i]+ "\n" ;
+                multipleCardEntries = multipleCardEntries + cityName[i]+ " is  " +location[i]+ "\n" ;
             }
             multipleCCs = multipleCCs +  "</speak>";
             cardTitle = "There are "+ location.length + " cost centers for "+ itemNumber +".  They are: " + multipleCardEntries;
             var speechText = "<speak><p>I found " + location.length + " cost centers for " + itemNumber + "</p><p> They are</p>" + multipleCCs;
-            console.log(speechText);
+            //console.log(speechText);
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
             };
-
-            response.tellWithCard(speechOutput, cardTitle, location [0]);
+            response.tellWithCardPic(speechOutput, cardTitle, location [0],picURLcce);
         }}
         else {
             var speech;
@@ -183,16 +188,17 @@ AreaCodeHelper.prototype.intentHandlers = {
             response.ask(speechOutput, repromptOutput);
         }
     },
+    
     "AMAZON.StopIntent": function (intent, session, response) {
         var speechOutput = "Goodbye";
         response.tell(speechOutput);
     },
-
+    
     "AMAZON.CancelIntent": function (intent, session, response) {
         var speechOutput = "Goodbye";
         response.tell(speechOutput);
     },
-
+    
     "AMAZON.HelpIntent": function (intent, session, response) {
         var speechText = {
                 speech:  "<speak>You get the location of a cost center by saying, "
