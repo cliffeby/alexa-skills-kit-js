@@ -27,8 +27,8 @@ var AlexaSkill = require('./AlexaSkill'),
 var APP_ID = 'amzn1.echo-sdk-ams.app.7838e90e-4fbd-4048-93e3-c6b8ec4fce43'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 // Sample images that could be used
-var picURL = "https://example.com/small.png";
-//var picURL = "https://s3.amazonaws.com/alexaimagescce/Anita+Macaluso.jpg";
+//var picURL = "https://example.com/small.png";
+var picURL = "https://s3.amazonaws.com/alexaimagescce/Anita+Macaluso.jpg";
 var picURLcce = "https://s3.amazonaws.com/alexaimagescce/CliffEby2_jpg.jpg";
 /**
  * BMS CostCenter is a child of AlexaSkill.
@@ -155,10 +155,10 @@ AreaCodeHelper.prototype.intentHandlers = {
             var multipleCardEntries = " ";
             for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
                 multipleCCs = multipleCCs +"<p> The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as></p>" ;
-                multipleCardEntries = multipleCardEntries + cityName[i]+ " is  " +location[i]+ ".\n" ;
+                multipleCardEntries = multipleCardEntries + cityName[i]+ " is  " +location[i]+ ".\r\n" ;
             }
             multipleCCs = multipleCCs +  "</speak>";
-            cardTitle = "There are "+ location.length + " cost centers for "+ itemNumber +".  They are: \n" + multipleCardEntries;
+            cardTitle = "There are "+ location.length + " cost centers for "+ itemNumber +".  They are: \r\n" + multipleCardEntries;
             var speechText = "<speak><p>I found " + location.length + " cost centers for " + itemNumber + "</p><p> They are</p>" + multipleCCs;
             //console.log(speechText);
             speechOutput = {
