@@ -153,6 +153,7 @@ Response.prototype = (function () {
                 content: options.cardContent,
                 image: options.picURL
             };
+            console.log(alexaResponse.card,alexaResponse.card.image);
         }
         var returnResult = {
                 version: '1.0',
@@ -187,7 +188,7 @@ Response.prototype = (function () {
                 output: speechOutput,
                 cardTitle: cardTitle,
                 cardContent: cardContent,
-                picURL: {smallImageUrl: picURL},
+                picURL: {"smallImageUrl": picURL, "largeImageUrl": picURL},
                 shouldEndSession: true
             }));
         },
