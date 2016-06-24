@@ -27,7 +27,6 @@ var AlexaSkill = require('./AlexaSkill'),
 var APP_ID = 'amzn1.echo-sdk-ams.app.7838e90e-4fbd-4048-93e3-c6b8ec4fce43'; //replace with 'amzn1.echo-sdk-ams.app.[your-unique-value-here]';
 
 // Sample images that could be used
-//var picURL = "https://example.com/small.png";
 var picURL = "https://s3.amazonaws.com/alexaimagescce/Anita+Macaluso.jpg";
 var picURLcce = "https://s3.amazonaws.com/alexaimagescce/CliffEby2_jpg.jpg";
 /**
@@ -121,7 +120,7 @@ AreaCodeHelper.prototype.intentHandlers = {
             //console.log('itemNumber',itemNumber);
         }
 
-        var cardTitle = "Cost Center for " + itemNumber.toUpperCase(),
+        var cardTitle = "The cost center for " + itemNumber.toUpperCase(),
             location = [],
             cityName = [],
             speechOutput,
@@ -140,7 +139,7 @@ AreaCodeHelper.prototype.intentHandlers = {
         if (location.length==1) {
             //console.log('location', location, cityName[0], location[0]);
             var speechText = "<speak>The cost center for " + cityName[0] +  " is <say-as interpret-as='digits'>" + location[0] + "</say-as></speak>";
-
+            cardTitle = cardTitle + " is " + location[0];
             speechOutput = {
                 speech: speechText,
                 type: AlexaSkill.speechOutputType.SSML
@@ -155,10 +154,10 @@ AreaCodeHelper.prototype.intentHandlers = {
             var multipleCardEntries = " ";
             for (var i = 0; i<costCenterNames[itemNumber].length; i++) {
                 multipleCCs = multipleCCs +"<p> The cost center for " + cityName[i]+ "is  <say-as interpret-as='digits'>" +location[i]+ "</say-as></p>" ;
-                multipleCardEntries = multipleCardEntries + cityName[i]+ " is  " +location[i]+ ".\r\n" ;
+                multipleCardEntries = multipleCardEntries + cityName[i]+ " is  " +location[i]+ ". \n\n" ;
             }
             multipleCCs = multipleCCs +  "</speak>";
-            cardTitle = "There are "+ location.length + " cost centers for "+ itemNumber +".  They are: \r\n" + multipleCardEntries;
+            cardTitle = "There are "+ location.length + " cost centers for "+ itemNumber +".  They are: \n" + multipleCardEntries;
             var speechText = "<speak><p>I found " + location.length + " cost centers for " + itemNumber + "</p><p> They are</p>" + multipleCCs;
             //console.log(speechText);
             speechOutput = {
